@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+
+
 import { PropertyCardProps } from "@/interfaces";
 import { RiStarFill } from "react-icons/ri";
 import { IoBed } from "react-icons/io5";

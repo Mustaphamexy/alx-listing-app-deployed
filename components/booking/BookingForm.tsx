@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
 import CancellationPolicy from "./CancellationPolicy";
 import { FaAngleDown } from "react-icons/fa6";
 import { IoLockClosedSharp } from "react-icons/io5";

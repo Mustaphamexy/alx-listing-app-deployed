@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+
+
 import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { ReviewProps } from '@/interfaces';

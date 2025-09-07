@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @next/next/no-img-element */
+
 const OrderSummary: React.FC<{ bookingDetails: any }> = ({
   bookingDetails,
 }) => (

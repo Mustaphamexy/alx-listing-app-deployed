@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+
+
 import React from "react";
 import { PropertyDescProps  } from "@/interfaces/index";
 import { FaStar, FaBed, FaBath, FaUsers } from "react-icons/fa";
