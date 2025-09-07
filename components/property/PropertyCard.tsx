@@ -4,10 +4,24 @@ import { IoBed } from "react-icons/io5";
 import { FaBath } from "react-icons/fa6";
 import { HiUsers } from "react-icons/hi";
 import { PiSealPercentFill } from "react-icons/pi";
+import { useRouter } from "next/router";
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    if (property.id) {
+      router.push(`/property/${property.id}`);
+    } else {
+      console.warn("Property ID is missing, cannot navigate to details page");
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+    <div 
+      className="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative">
         <img
           src={property.image || "/placeholder.jpg"}
@@ -50,7 +64,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property }) => {
             </div>
           )}
         </div>
-
 
         <p className="text-sm text-gray-600">
           {property.address?.city}, {property.address?.country}

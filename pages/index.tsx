@@ -5,50 +5,49 @@ import PropertyCard from "@/components/property/PropertyCard";
 import Pill from "@/components/common/Pill";
 import { FILTER_OPTIONS } from "@/constants/index";
 import { LuFilter } from "react-icons/lu";
-import { PROPERTYLISTINGSAMPLE } from "@/constants/index";
+import { PropertyProps } from "@/interfaces"; // Import the interface
 
 const PropertyListingPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [activeFilter, setActiveFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Highest Price");
-  const [properties, setProperties] = useState([]);
+  const [properties, setProperties] = useState<PropertyProps[]>([]); // Use PropertyProps[]
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-
   useEffect(() => {
-    const fetchproperties = async () => {
+    const fetchProperties = async () => {
       try {
         setLoading(true);
-         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/properties`);
+        setError(null);
+        const response = await axios.get<PropertyProps[]>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/properties`);
         setProperties(response.data);
       } catch (error) {
-        console.error ('Error Fetching properties:', error);
+        console.error('Error Fetching properties:', error);
+        setError('Failed to load properties. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchproperties();
+    fetchProperties();
   }, []);
 
-
+  // ... rest of the code
 
   const filteredProperties = properties.filter(property => {
     if (activeFilter === "All") return true;
-    if (activeFilter === "Top Villa") return property.category.includes("Luxury Villa") || property.name.includes("villa");
+    if (activeFilter === "Top Villa") return property.category.includes("Luxury Villa") || property.name.toLowerCase().includes("villa");
     if (activeFilter === "Self Checkin") return property.category.includes("Self Checkin");
     if (activeFilter === "Free Reschedule") return property.category.includes("Free Reschedule");
     return true;
-
   });
 
-  const sortedPropeties = [...filteredProperties].sort((a , b) => {
-  if (sortBy === "Highest Price") return b.price - a.price;
-  if (sortBy === "Lowest Price") return a.price - b.price;
-  if (sortBy === "Highest Rating") return b.rating - a.rating;
-   return 0;
-
+  const sortedProperties = [...filteredProperties].sort((a, b) => {
+    if (sortBy === "Highest Price") return b.price - a.price;
+    if (sortBy === "Lowest Price") return a.price - b.price;
+    if (sortBy === "Highest Rating") return b.rating - a.rating;
+    return 0;
   });
 
   useEffect(() => {
@@ -144,9 +143,8 @@ const PropertyListingPage: React.FC = () => {
 
         {/* Property Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
-          {sortedPropeties.map((property, index) => (
-
-            <PropertyCard key={index} property={property} />
+          {sortedProperties.map((property, index) => (
+            <PropertyCard key={property.id || index} property={property} />
           ))}
         </div>
 
@@ -154,8 +152,6 @@ const PropertyListingPage: React.FC = () => {
           <button className="bg-black text-white px-8 py-3 rounded-lg hover:bg-gray-700 transition-colors duration-300 ">Show More</button>
           <p className="text-gray-600 mt-4">Click to see more listings</p>
         </div>
-
-
       </div>
     </div>
   );

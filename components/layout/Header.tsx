@@ -17,6 +17,7 @@ import { GiTreehouse, GiWoodCabin, GiIsland, GiCastle } from "react-icons/gi";
 import { FaCircleUser } from "react-icons/fa6";
 import Logo from "@/public/assets/Logo.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const accommodationTypes: AccommodationType[] = [
   { id: "rooms", name: "Rooms", icon: <FaHome className="w-6 h-6" /> },
@@ -97,9 +98,11 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="md:flex items-center hidden ">
-            <div className="text-2xl font-bold text-gray-900">
-              <Image src={Logo} alt="star" />
-            </div>
+            <Link href="/">
+    <div className="text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity duration-200">
+      <Image src={Logo} alt="logo" />
+    </div>
+  </Link>
           </div>
 
           {/* Mobile View */}

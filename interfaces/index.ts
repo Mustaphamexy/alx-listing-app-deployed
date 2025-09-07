@@ -1,5 +1,3 @@
-
-
 export interface CardProps {
   title?: string;
   description?: string;
@@ -16,9 +14,10 @@ export interface ButtonProps {
 }
 
 export interface PropertyProps {
+  id: number;
   name: string;
   address: {
-    state?: string;
+    state: string;
     city: string;
     country: string;
   };
@@ -28,10 +27,14 @@ export interface PropertyProps {
   offers: {
     bed: string;
     shower: string;
-    occupants:string;
+    occupants: string;
   };
   image: string;
   discount: string;
+  reviewCount?: number;
+  description?: string;
+  amenities?: string[];
+  images?: string[];
 }
 
 export interface AccommodationType {
@@ -43,7 +46,6 @@ export interface AccommodationType {
 export interface PropertyCardProps {
   property: PropertyProps;
 }
-
 
 export interface PillProps {
   label: string;

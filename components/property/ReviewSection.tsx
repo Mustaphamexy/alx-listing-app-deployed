@@ -4,7 +4,7 @@ import { ReviewProps } from '@/interfaces';
 import axios from "axios";
 
 interface ReviewSectionProps {
-  propertyId: string;
+  propertyId: string | number; // Allow both string and number
 }
 
 const ReviewSection: React.FC<ReviewSectionProps> = ({ propertyId }) => {
@@ -15,11 +15,37 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({ propertyId }) => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/api/properties/${propertyId}/reviews`);
+        // Use your mock API endpoint for reviews
+const response = await axios.get(
+  `${process.env.NEXT_PUBLIC_API_BASE_URL}/reviews`
+);
         setReviews(response.data);
       } catch (error) {
         console.error("Error fetching Reviews:", error);
         setError("Failed to load reviews.");
+        // Fallback to sample reviews if API fails
+        setReviews([
+          {
+            id: 1,
+            name: "Sarah Johnson",
+            avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+            rating: "4.8",
+            comment: "Absolutely loved our stay! The villa was even more beautiful in person and the staff was incredibly attentive.",
+            date: "March 2024",
+            yearsOnPlatform: "3 years",
+            tripType: "Family trip"
+          },
+          {
+            id: 2,
+            name: "Michael Chen",
+            avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
+            rating: "4.9",
+            comment: "The perfect getaway! Stunning views, impeccable service, and the amenities were top-notch.",
+            date: "August 2023",
+            yearsOnPlatform: "5 years",
+            tripType: "Couples retreat"
+          }
+        ]);
       } finally {
         setLoading(false);
       }
